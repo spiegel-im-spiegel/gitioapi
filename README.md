@@ -1,5 +1,7 @@
 # Git.io Web API Package
 
+[![Build Status](https://travis-ci.org/spiegel-im-spiegel/gitioapi.svg)](https://travis-ci.org/spiegel-im-spiegel/gitioapi)
+
 ## Git.io Web API
 
 Refer to “[Git.io: GitHub URL Shortener](https://github.com/blog/985-git-io-github-url-shortener)”.
