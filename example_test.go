@@ -5,8 +5,8 @@ import (
 	"github.com/spiegel-im-spiegel/gitioapi"
 )
 
-func ExampleDayNumber() {
-	shortUrl, _ := gitioapi.Encode(&gitioapi.Param{Url: "https://github.com/spgl", Code: "spgl"})
+func ExampleEncode() {
+	shortUrl, _ := gitioapi.Encode(&gitioapi.Param{Url: "https://github.com/technoweenie", Code: "t"})
 	fmt.Print(shortUrl)
-	// http://git.io/spgl:
+	// http://git.io/t:
 }

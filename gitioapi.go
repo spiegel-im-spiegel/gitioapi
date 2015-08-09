@@ -55,6 +55,7 @@ func (prm *Param) GetUrlValuse() url.Values {
 }
 
 //Shorten GitHub Domain URL.
+// Web API: curl -i http://git.io -F "url=https://github.com/technoweenie" -F "code=t"
 func Encode(prm *Param) (string, error) {
 	//shortening url
 	resp, err := http.PostForm("http://git.io", prm.GetUrlValuse())

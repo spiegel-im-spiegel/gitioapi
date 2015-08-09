@@ -37,9 +37,11 @@ func TestMain(m *testing.M) {
 	//Test cases for Param
 	parmsTests = []parmsTestCase{
 		{url: "https://github.com/spiegel-im-spiegel", code: "", res: "http://git.io/vOj52", errMsg: ""},
-		{url: "https://github.com/spgl", code: "spgl", res: "http://git.io/spgl", errMsg: ""},
+		{url: "https://github.com/technoweenie", code: "t", res: "http://git.io/t", errMsg: ""},
 		{url: "http://www.baldanders.info/", code: "", res: "", errMsg: "invalid argument (Must be a GitHub.com URL.)"},
-		{url: "", code: "spgl", res: "", errMsg: "invalid argument (Invalid url: )"},
+		{url: "noturl", code: "t", res: "", errMsg: "invalid argument (Invalid url: noturl)"},
+		{url: "noturl", code: "", res: "", errMsg: "invalid argument (Invalid url: noturl)"},
+		{url: "", code: "t", res: "", errMsg: "invalid argument (Invalid url: )"},
 		{url: "", code: "", res: "", errMsg: "invalid argument (Invalid url: )"},
 	}
 
