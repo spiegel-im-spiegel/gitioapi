@@ -10,7 +10,6 @@ import (
 type errorTestCase struct { //Test case for Error
 	status  string
 	err     error
-	isError bool
 	errMsg  string
 }
 
@@ -27,11 +26,13 @@ var parmsTests []parmsTestCase //Test cases for Param
 
 func TestMain(m *testing.M) {
 	//Test cases for Error
+	err1 := errors.New("error 1 !")
+	err2 := errors.New("error 2 !")
 	errorTests = []errorTestCase{
-		{status: "status", err: errors.New("error!"), isError: true, errMsg: "error! (status)"},
-		{status: "", err: errors.New("error!"), isError: true, errMsg: "error!"},
-		{status: "status", err: nil, isError: false, errMsg: ""},
-		{status: "", err: nil, isError: false, errMsg: ""},
+		{status: "status", err: err1, errMsg: "error 1 ! (status)"},
+		{status: "", err: err2, errMsg: "error 2 !"},
+		{status: "status", err: nil, errMsg: ""},
+		{status: "", err: nil, errMsg: ""},
 	}
 	//Test cases for Param
 	parmsTests = []parmsTestCase{
@@ -49,15 +50,18 @@ func TestMain(m *testing.M) {
 	os.Exit(code)
 }
 
-func TestStatus(t *testing.T) {
+func TestError(t *testing.T) {
 	for _, testCase := range errorTests {
-		status := Status{Status: testCase.status, Err: testCase.err}
-		if status.IsError() != testCase.isError {
-			t.Errorf("Error Status  = %v, want %v.", status.IsError(), testCase.isError)
-		}
-		msg := status.Error()
-		if msg != testCase.errMsg {
-			t.Errorf("Status  = %v, want %v.", msg, testCase.errMsg)
+		err := NewApiError(testCase.status, testCase.err)
+		if err == nil {
+			if len(testCase.errMsg) > 0 {
+				t.Error("Error Status  = 'false', want 'true'.")
+			}
+		} else {
+			msg := err.Error()
+			if msg != testCase.errMsg {
+				t.Errorf("Status  = %v, want %v.", msg, testCase.errMsg)
+			}
 		}
 	}
 }
@@ -99,12 +103,18 @@ func TestParams(t *testing.T) {
 func TestEncode(t *testing.T) {
 	for _, testCase := range parmsTests {
 		prm := Param{Url: testCase.url, Code: testCase.code}
-		result, status := Encode(&prm)
+		result, err := Encode(&prm)
 		if result != testCase.res {
 			t.Errorf("Encode()  = %v, want %v.", result, testCase.res)
 		}
-		if status.Error() != testCase.errMsg {
-			t.Errorf("Status of Encode()  = %v, want %v.", status.Error(), testCase.errMsg)
+		if err == nil {
+			if len(testCase.errMsg) > 0 {
+				t.Error("Status of Encode() = false, want true.")
+			}
+		} else {
+			if err.Error() != testCase.errMsg {
+				t.Errorf("Status of Encode() = %v, want %v.", err.Error(), testCase.errMsg)
+			}
 		}
 	}
 }

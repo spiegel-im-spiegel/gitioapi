@@ -6,8 +6,7 @@ import (
 )
 
 func ExampleDayNumber() {
-	shortUrl, status := gitioapi.Encode(&gitioapi.Param{Url: "https://github.com/spgl", Code: "spgl"})
-	fmt.Print(shortUrl, status.Status)
+	shortUrl, _ := gitioapi.Encode(&gitioapi.Param{Url: "https://github.com/spgl", Code: "spgl"})
+	fmt.Print(shortUrl)
 	// http://git.io/spgl:
-	// 201 Created
 }

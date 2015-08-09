@@ -16,28 +16,24 @@ import (
 )
 
 // Error reports an error and status.
-type Status struct {
+type ApiError struct {
 	Status string
 	Err    error
 }
 
-// Is this Error?
-func (s *Status) IsError() bool {
-	if s.Err != nil {
-		return true
+// Error reports.
+func (e *ApiError) Error() string {
+	if len(e.Status) > 0 {
+		return e.Err.Error() + " (" + e.Status + ")"
 	}
-	return false
+	return e.Err.Error()
 }
 
-// Error reports.
-func (s *Status) Error() string {
-	if s.IsError() {
-		if len(s.Status) > 0 {
-			return s.Err.Error() + " (" + s.Status + ")"
-		}
-		return s.Err.Error()
+func NewApiError(status string, err error) error {
+	if err == nil {
+		return nil
 	}
-	return ""
+	return &ApiError{Status: status, Err: err}
 }
 
 //Parameter for Git.io API
@@ -59,23 +55,23 @@ func (prm *Param) GetUrlValuse() url.Values {
 }
 
 //Shorten GitHub Domain URL.
-func Encode(prm *Param) (string, Status) {
+func Encode(prm *Param) (string, error) {
 	//shortening url
 	resp, err := http.PostForm("http://git.io", prm.GetUrlValuse())
 	if err != nil {
-		return "", Status{Status: "", Err: err}
+		return "", NewApiError("", err)
 	}
 	defer resp.Body.Close()
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return "", Status{Status: "", Err: err}
+		return "", NewApiError("", err)
 	}
 
 	result := resp.Header.Get("Location")
 	if string(body) != prm.Url {
-		return result, Status{Status: string(body), Err: os.ErrInvalid}
+		return result, NewApiError(string(body), os.ErrInvalid)
 	} else {
-		return result, Status{Status: "", Err: nil}
+		return result, nil
 	}
 }
