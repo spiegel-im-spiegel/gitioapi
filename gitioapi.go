@@ -70,8 +70,9 @@ func Encode(prm *Param) (string, error) {
 	}
 
 	result := resp.Header.Get("Location")
-	if string(body) != prm.Url {
-		return result, NewApiError(string(body), os.ErrInvalid)
+	status := string(body)
+	if status != prm.Url {
+		return result, NewApiError(status, os.ErrInvalid)
 	} else {
 		return result, nil
 	}
