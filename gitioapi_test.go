@@ -8,9 +8,9 @@ import (
 )
 
 type errorTestCase struct { //Test case for Error
-	status  string
-	err     error
-	errMsg  string
+	status string
+	err    error
+	errMsg string
 }
 
 var errorTests []errorTestCase //Test cases for Error
