@@ -23,6 +23,7 @@ type parmsTestCase struct { //Test case for Param
 }
 
 var parmsTests []parmsTestCase //Test cases for Param
+var parmsTests2 []parmsTestCase //Test cases for Param
 
 func TestMain(m *testing.M) {
 	//Test cases for Error
@@ -43,6 +44,16 @@ func TestMain(m *testing.M) {
 		{url: "noturl", code: "", res: "", errMsg: "invalid argument (Invalid url: noturl)"},
 		{url: "", code: "t", res: "", errMsg: "invalid argument (Invalid url: )"},
 		{url: "", code: "", res: "", errMsg: "invalid argument (Invalid url: )"},
+	}
+	parmsTests2 = []parmsTestCase{
+		{url: "http://git.io/vOj52", code: "", res: "https://github.com/spiegel-im-spiegel", errMsg: ""},
+		{url: "http://git.io/t", code: "", res: "https://github.com/technoweenie", errMsg: ""},
+		{url: "http://git.io/t", code: "t", res: "https://github.com/technoweenie", errMsg: ""},
+		{url: "http://git.io/", code: "", res: "http://git.io/", errMsg: ""},
+		{url: "http://git.io", code: "", res: "http://git.io", errMsg: ""},
+		{url: "http://git.is", code: "", res: "http://git.is", errMsg: ""},
+		{url: "noturl", code: "", res: "noturl", errMsg: ""},
+		{url: "", code: "", res: "", errMsg: ""},
 	}
 
 	//start test
@@ -117,6 +128,25 @@ func TestEncode(t *testing.T) {
 			if err.Error() != testCase.errMsg {
 				t.Errorf("Status of Encode() = %v, want %v.", err.Error(), testCase.errMsg)
 			}
+		}
+	}
+}
+
+func TestDecode(t *testing.T) {
+	for _, testCase := range parmsTests2 {
+		prm := Param{Url: testCase.url, Code: testCase.code}
+		result, err := Decode(&prm)
+		if result != testCase.res {
+			t.Errorf("Decode() = %v, want %v.", result, testCase.res)
+		}
+		if err == nil {
+			if len(testCase.errMsg) > 0 {
+				t.Error("Status of Decode() = false, want true.")
+			}
+		//} else {
+		//	if err.Error() != testCase.errMsg {
+		//		t.Errorf("Status of Encode() = %v, want %v.", err.Error(), testCase.errMsg)
+		//	}
 		}
 	}
 }

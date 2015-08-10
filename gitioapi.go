@@ -77,3 +77,33 @@ func Encode(prm *Param) (string, error) {
 		return result, nil
 	}
 }
+
+//Shorten GitHub Domain URL.
+// Web API: curl -i http://git.io/t
+func Decode(prm *Param) (string, error) {
+	//Chek Url
+	urlGitio := "http://git.io"
+	if len(prm.Url) < 13 || prm.Url[0:len(urlGitio)] != urlGitio {
+		return prm.Url, nil
+	}
+
+	//shortening url
+	client := &http.Client{}
+	request, err := http.NewRequest("HEAD", prm.Url, nil)
+	if err != nil {
+		return "", NewApiError("", err)
+	}
+	resp, err := client.Do(request)
+	if err != nil {
+		return "", NewApiError("", err)
+	}
+	defer resp.Body.Close()
+
+	result := resp.Request.URL.String()
+	if len(result) == 0 {
+		status := resp.Header.Get("Status")
+		return result, NewApiError(status, os.ErrInvalid)
+	} else {
+		return result, nil
+	}
+}
