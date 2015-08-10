@@ -26,6 +26,12 @@ func ExampleEncode() {
 	fmt.Print(shortUrl)
 	// http://git.io/t:
 }
+
+func ExampleDecode() {
+	shortUrl, _ := gitioapi.Decode(&gitioapi.Param{Url: "http://git.io/t"})
+	fmt.Print(shortUrl)
+	// https://github.com/technoweenie
+}
 ```
 
 ## License
