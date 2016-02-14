@@ -37,8 +37,8 @@ func TestMain(m *testing.M) {
 	}
 	//Test cases for Param
 	parmsTests = []parmsTestCase{
-		{url: "https://github.com/spiegel-im-spiegel", code: "", res: "http://git.io/vOj52", errMsg: ""},
-		{url: "https://github.com/technoweenie", code: "t", res: "http://git.io/t", errMsg: ""},
+		{url: "https://github.com/spiegel-im-spiegel", code: "", res: "https://git.io/vOj52", errMsg: ""},
+		{url: "https://github.com/technoweenie", code: "t", res: "https://git.io/t", errMsg: ""},
 		{url: "http://www.baldanders.info/", code: "", res: "", errMsg: "invalid argument (Must be a GitHub.com URL.)"},
 		{url: "noturl", code: "t", res: "", errMsg: "invalid argument (Invalid url: noturl)"},
 		{url: "noturl", code: "", res: "", errMsg: "invalid argument (Invalid url: noturl)"},
@@ -46,12 +46,12 @@ func TestMain(m *testing.M) {
 		{url: "", code: "", res: "", errMsg: "invalid argument (Invalid url: )"},
 	}
 	parmsTests2 = []parmsTestCase{
-		{url: "http://git.io/vOj52", code: "", res: "https://github.com/spiegel-im-spiegel", errMsg: ""},
-		{url: "http://git.io/t", code: "", res: "https://github.com/technoweenie", errMsg: ""},
-		{url: "http://git.io/t", code: "t", res: "https://github.com/technoweenie", errMsg: ""},
-		{url: "http://git.io/", code: "", res: "http://git.io/", errMsg: ""},
-		{url: "http://git.io", code: "", res: "http://git.io", errMsg: ""},
-		{url: "http://git.is", code: "", res: "http://git.is", errMsg: ""},
+		{url: "https://git.io/vOj52", code: "", res: "https://github.com/spiegel-im-spiegel", errMsg: ""},
+		{url: "https://git.io/t", code: "", res: "https://github.com/technoweenie", errMsg: ""},
+		{url: "https://git.io/t", code: "t", res: "https://github.com/technoweenie", errMsg: ""},
+		{url: "https://git.io/", code: "", res: "https://git.io/", errMsg: ""},
+		{url: "https://git.io", code: "", res: "https://git.io", errMsg: ""},
+		{url: "https://git.is", code: "", res: "https://git.is", errMsg: ""},
 		{url: "noturl", code: "", res: "noturl", errMsg: ""},
 		{url: "", code: "", res: "", errMsg: ""},
 	}
