@@ -58,7 +58,7 @@ func (prm *Param) GetUrlValuse() url.Values {
 // Web API: curl -i http://git.io -F "url=https://github.com/technoweenie" -F "code=t"
 func Encode(prm *Param) (string, error) {
 	//shortening url
-	resp, err := http.PostForm("http://git.io", prm.GetUrlValuse())
+	resp, err := http.PostForm("https://git.io", prm.GetUrlValuse())
 	if err != nil {
 		return "", NewApiError("", err)
 	}
@@ -82,7 +82,7 @@ func Encode(prm *Param) (string, error) {
 // Web API: curl -i http://git.io/t
 func Decode(prm *Param) (string, error) {
 	//Chek Url
-	urlGitio := "http://git.io"
+	urlGitio := "https://git.io"
 	if len(prm.Url) < 13 || prm.Url[0:len(urlGitio)] != urlGitio {
 		return prm.Url, nil
 	}
